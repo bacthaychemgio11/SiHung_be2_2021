@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\SearchCompaniesController;
 use App\Http\Middleware\PerPage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,3 +37,6 @@ Route::fallback(function () {
 Route::get('/error', function () {
     return view('error');
 })->name('Error');
+
+
+Route::get('/getCompanyType/{id}', [CategoryController::class,'getCompanies']);

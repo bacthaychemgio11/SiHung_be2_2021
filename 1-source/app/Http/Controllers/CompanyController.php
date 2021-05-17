@@ -22,9 +22,4 @@ class CompanyController extends Controller
 
         return view('companies', ['companies' => $companies]);
     }
-
-    public function getCategory()
-    {
-
-    }
 }

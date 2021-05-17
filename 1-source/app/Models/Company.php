@@ -11,7 +11,8 @@ class Company extends Model
 
     protected $table = 'companies';
 
-    public  function getCategory(){
-        return $this->morphTo();
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
