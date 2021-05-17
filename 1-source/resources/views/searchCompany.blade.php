@@ -25,7 +25,6 @@
         <a class="p-2 text-dark" href="/companies">Companies</a>
         <a class="p-2 text-dark" href="/trainers">Trainers</a>
         <a class="p-2 text-dark" href="/search">Search</a>
-
     </nav>
 
 </div>
@@ -76,11 +75,6 @@
                 <h5>Companies</h5>
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="#">List of companies</a></li>
-
-
-
-
-
                 </ul>
             </div>
             <div class="col-6 col-md">
@@ -88,18 +82,12 @@
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="#">List of trainers
                         </a></li>
-
-
-
                 </ul>
             </div>
             <div class="col-6 col-md">
                 <h5>About</h5>
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="#">Team</a></li>
-
-
-
                 </ul>
             </div>
         </div>

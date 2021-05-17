@@ -12,7 +12,8 @@ use App\Models\Company;
 
 class CompanyController extends Controller
 {
-    public function getCompanies(Request $request) {
+    public function getCompanies(Request $request)
+    {
 
         $per_page = $request->input('per_page');
 
@@ -20,5 +21,10 @@ class CompanyController extends Controller
         $companies = $obj->paginate($per_page);
 
         return view('companies', ['companies' => $companies]);
+    }
+
+    public function getCategory()
+    {
+
     }
 }
