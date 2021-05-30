@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 
 Route::get('/companies', [CompanyController::class, 'getCompanies'])
-    ->middleware('trainer_logic');
+    ->middleware('per_page');
 
 Route::get('/trainers', [TrainerController::class, 'getTrainers'])->middleware('per_page');
 

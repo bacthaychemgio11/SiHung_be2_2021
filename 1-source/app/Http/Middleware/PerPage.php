@@ -29,21 +29,10 @@ class PerPage
         }
 
         //
-        $validPer_page = array(10,20,30,50);
+        $validPer_page = [10,20,30,50,70];
         if (!in_array($per_page,$validPer_page)){
             $per_page = 10;
         }
-
-//        switch ($per_page){
-//            case 10: $per_page = 10;
-//            break;
-//            case 20: $per_page = 20;
-//                break;
-//            case 30: $per_page = 30;
-//                break;
-//            default: $per_page = 10;
-//                break;
-//        }
 
         $request->merge([ 'per_page' => $per_page]);
 
