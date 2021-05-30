@@ -59,7 +59,6 @@
                     <td>{!! $company->company_phone !!}</td>
                 </tr>
                 @endforeach
-
             </tbody>
         </table>
         {!! $companies->render() !!}

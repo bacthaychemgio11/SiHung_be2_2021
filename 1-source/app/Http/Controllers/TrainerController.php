@@ -12,7 +12,8 @@ use App\Models\Trainer;
 
 class TrainerController extends Controller
 {
-    public function getTrainers(Request $request) {
+    public function getTrainers(Request $request)
+    {
 
         $per_page = $request->input('per_page');
 

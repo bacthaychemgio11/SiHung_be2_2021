@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\SearchCompaniesController;
+use App\Http\Controllers\SearchTrainerController;
 use App\Http\Middleware\PerPage;
 
 /*
@@ -40,3 +41,5 @@ Route::get('/error', function () {
 
 
 Route::get('/getCompanyType/{id}', [CategoryController::class,'getCompanies']);
+
+Route::get('/search', [SearchTrainerController::class,'search']);
