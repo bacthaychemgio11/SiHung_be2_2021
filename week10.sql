@@ -1,46 +1,78 @@
-a. SELECT * FROM Teachers;
+a. SELECT users.* FROM types join types.type_id = users.type_id
+	WHERE types.type_name = 'Giang Vien';
 
-b. SELECT * FROM Users 
+b. SELECT users.* FROM types join types.type_id = users.type_id
+	WHERE types.type_name = 'Sinh Vien';
 
-c. SELECT * FROM Courses;
+c. SELECT * FROM courses;
 
-d. SELECT a.* FROM Class as a JOIN Class_users as b ON a.class_id = b.class_id
-JOIN Teachers as c ON b.teacher_id = c.teacher_id WHERE c.name LIKE '%Nguyen Van A%';
+d. SELECT users.* FROM types join types.type_id = users.type_id
+	JOIN class_user ON users.user_id = class_user.user_id
+	JOIN classes ON class_user.class_id = classes.class_id 
+	JOIN courses ON courses.course_id = classes.course_id 
+	WHERE (users.user_name LIKE '%Nguyen Van A%')
+	AND types.type_name = 'Giang Vien'
 
-e. SELECT e.* FROM Courses as a join Class as b ON a.course_id = b.course_id
-	JOIN Class_users as c ON c.class_id = b.class_id 
-	JOIN Teachers d ON d.teacher_id= c.teacher_id
-	JOIN Users as e ON c.user_id = e.user_id
-	WHERE (d.name LIKE '%Nguyen Van A%')
-	AND (a.course_name LIKE '%Thuc Tap Doanh Nghiep%')
-	AND (a.course_year = 2021)
-	AND (a.course_senmester = 1);
-
-
-
+e. SELECT users.* FROM types join types.type_id = users.type_id
+	JOIN class_user ON users.user_id = class_user.user_id
+	JOIN classes ON class_user.class_id = classes.class_id 
+	JOIN courses ON courses.course_id = classes.course_id 
+	WHERE courses.id IN 
+	(
+		SELECT courses.id FROM types join types.type_id = users.type_id
+			JOIN class_user ON users.user_id = class_user.user_id
+			JOIN classes ON class_user.class_id = classes.class_id 
+			JOIN courses ON courses.course_id = classes.course_id 
+		WHERE (users.user_name LIKE '%Nguyen Van A%')
+			AND types.type_name = 'Giang Vien'
+			AND (courses.course_name LIKE '%Thuc Tap Doanh Nghiep%')
+			AND (courses.course_year = 2021)
+			AND (courses.course_semester = 1);
+	)
 
 _____________________________________________________________________________
 f)
-SELECT companies.* FROM courses
-	join class on courses.course_id = class.course_id
-	join class_users on class.class_id = class_users.class_id 
-	join teachers on teachers.teacher_id = class_users.teacher_id
-	join users on class_users.user_id = users.user_id
-	join trainers on trainers.user_id = users.user_id
-	join companies on companies.company_id = trainers.company_id
-	WHERE (teachers.name LIKE 'Nguyen Van A')
-	AND (courses.course_name = 'Thuc Tap Doanh Nghiep')
-	
+SELECT DISTINCT companies.* FROM type
+	join users on type.type_id = users.type_id
+	join class_users on users.user_id = class_users.teacher_id
+    	join class on class_users.class_id = class.class_id
+    	join courses on class.course_id = courses.course_id
+    	join trainers on users.trainer_id = trainers.trainer_id
+	join companies on trainers.company_id = companies.company_id
+    WHERE (users.user_name LIKE 'Nguyen Van A')
+    AND (courses.course_name = 'Thuc Tap Doanh Nghiep')
+
 g)
-SELECT diary.* FROM users
+SELECT diary.* FROM type
+	JOIN users on type.type_id = users.type_id
+	JOIN diary on users.user_id = diary.user_id
+	JOIN weeks on diary.diary_id = weeks.diary_id
+	JOIN diarycontent on weeks.week_id = diarycontent.week_id
+	WHERE (users.user_name LIKE 'tai duc')
+    	AND type.type_id = 'TY01'
+
+h)
+SELECT diarycontent.* FROM type
+JOIN users on type.type_id = users.type_id
 JOIN diary on users.user_id = diary.user_id
 JOIN weeks on diary.diary_id = weeks.diary_id
 JOIN diarycontent on weeks.week_id = diarycontent.week_id
-WHERE (users.user_name LIKE 'Nguyen Van A')
+	WHERE type.type_id = 'TY01'
+    	AND users.user_name IN
+	(
+		SELECT users.user_name FROM courses
+        	join class on courses.course_id = class.course_id
+		join class_users on class.class_id = class_users.class_id 
+		join users on class_users.user_id = users.user_id
+		WHERE (
+			courses.course_name = 'Thuc Tap Doanh Nghiep'
+			AND (courses.course_year = '2021')
+			AND (courses.course_semester = 'TT1')
+			AND (users.user_name LIKE 'viet nguyen')
+		)
+	)
 
-
-
-h)
+i)
 SELECT diarycontent.* FROM users
 JOIN diary on users.user_id = diary.user_id
 JOIN weeks on diary.diary_id = weeks.diary_id
@@ -55,64 +87,33 @@ JOIN diarycontent on weeks.week_id = diarycontent.week_id
 			courses.course_name = 'Thuc Tap Doanh Nghiep'
 			AND (courses.course_year = '2021')
 			AND (courses.course_semester = 'TT1')
+			AND (users.user_name LIKE 'viet nguyen')
 		)
 	)
 
-i)
-SELECT diarycontent.* FROM users
-JOIN diary on users.user_id = diary.user_id
-JOIN weeks on diary.diary_id = weeks.diary_id
-JOIN diarycontent on weeks.week_id = diarycontent.week_id
-	WHERE users.user_name IN
+_________________________________________________________________________________
+j. SELECT d.user_id, d.user_name, j.trainer_id, j.trainer_name ,a.* FROM DiaryContent as a 
+	JOIN weeks as b ON a.week_id = b.week_id
+	JOIN diary as c ON b.diary_id = c.diary_id
+	JOIN users as d ON c.user_id = d.user_id
+	JOIN trainers AS j ON d.user_id = j.user_id
+	join users as e on  j.user_id = e.user_id
+	join Type as t on e.type_id = t.type_id
+WHERE users.user_name IN
 	(
 		SELECT users.user_name FROM courses
         join class on courses.course_id = class.course_id
 		join class_users on class.class_id = class_users.class_id 
 		join users on class_users.user_id = users.user_id
-		WHERE (
-			courses.course_name = 'Thuc Tap Doanh Nghiep'
-			AND (courses.course_year = '2021')
-			AND (courses.course_semester = 'TT1')
-			AND (users.user_name LIKE 'viet nguyen')
-		)
+	WHERE (t.type_name LIKE '%Student%') 
+	AND (d.user_name LIKE '%Nguyen Van B%')
+	AND (courses.course_year = 2021)
+	AND (courses.course_senmester = 1)
 	)
+)
+	
 
 
--- (_____NEU DUNG BANG TYPE:_____)
-
-SELECT d.user_id, d.user_name, i.teacher_id, i.name ,a.* FROM DiaryContent as a 
-	JOIN weeks as b ON a.week_id = b.week_id
-	JOIN diary as c ON b.diary_id = c.diary_id
-	JOIN users as d ON c.user_id = d.user_id
-	JOIN type as e ON d.type_id = e.type_id
-	JOIN class_users as f ON f.user_id = d.user_id
-	JOIN class as g ON f.class_id = g.class_id
-	JOIN courses as h ON h.course_id  = g.course_id
-	JOIN teachers AS i ON f.teacher_id = i.teacher_id
-	JOIN trainers AS j ON j.user_id = d.user_id 
-	WHERE (e.type_name LIKE '%Student%') 
-	AND (d.user_name LIKE '%Nguyen Van B%')
-	AND (h.course_year = 2021)
-	AND (h.course_senmester = 1);
-
-
-
-_________________________________________________________________________________
-j)
-SELECT d.user_id, d.user_name, j.trainer_id, j.trainer_name ,a.* FROM DiaryContent as a 
-	JOIN weeks as b ON a.week_id = b.week_id
-	JOIN diary as c ON b.diary_id = c.diary_id
-	JOIN users as d ON c.user_id = d.user_id
-	JOIN type as e ON d.type_id = e.type_id
-	JOIN class_users as f ON f.user_id = d.user_id
-	JOIN class as g ON f.class_id = g.class_id
-	JOIN courses as h ON h.course_id  = g.course_id
-	JOIN teachers AS i ON f.teacher_id = i.teacher_id
-	JOIN trainers AS j ON j.user_id = d.user_id 
-	WHERE (e.type_name LIKE '%Student%') 
-	AND (d.user_name LIKE '%Nguyen Van B%')
-	AND (h.course_year = 2021)
-	AND (h.course_senmester = 1);
 
 
 
