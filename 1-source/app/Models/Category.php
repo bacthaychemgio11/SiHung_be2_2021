@@ -9,10 +9,5 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'category';
-
-    public function companies()
-    {
-    	return $this->hasMany(Company::class);
-    }
+    protected $table = 'categories';
 }
