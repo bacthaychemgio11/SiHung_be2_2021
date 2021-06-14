@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
         for ($i = 0; $i < 100; $i++) {
             DB::table('users')->insert([
                 'user_name' => Str::random(10),
+                'user_email' => Str::random(10) . "@gmail.com",
+                'user_password' => Str::random(10),
                 'type_id' => rand(1, 100),
                 'group_id' => rand(1, 100),
             ]);

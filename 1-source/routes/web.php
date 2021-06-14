@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\SearchCompaniesController;
 use App\Http\Controllers\SearchTrainerController;
@@ -29,7 +30,7 @@ Route::get('/companies', [CompanyController::class, 'getCompanies'])
 
 Route::get('/trainers', [TrainerController::class, 'getTrainers'])->middleware('per_page');
 
-Route::get('/searchCompanies', [SearchCompaniesController::class,'search']);
+Route::get('/searchCompanies', [SearchCompaniesController::class, 'search']);
 
 Route::fallback(function () {
     return view('404');
@@ -40,6 +41,17 @@ Route::get('/error', function () {
 })->name('Error');
 
 
-Route::get('/getCompanyType/{id}', [CategoryController::class,'getCompanies']);
+Route::get('/getCompanyType/{id}', [CategoryController::class, 'getCompanies']);
 
-Route::get('/search', [SearchTrainerController::class,'search']);
+Route::get('/search', [SearchTrainerController::class, 'search']);
+
+
+
+// LOG IN - LOG OUT - RESGITRATION
+
+Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
+Route::get('login', [CustomAuthController::class, 'index'])->name('login');
+Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
+Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
+Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
+Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
