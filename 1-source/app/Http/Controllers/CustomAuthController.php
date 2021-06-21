@@ -25,7 +25,13 @@ class CustomAuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
+        $input = [
+            'user_email' => $credentials['email'],
+            'password' => $credentials['password']
+        ];
+
+        if (Auth::attempt($input)) {
+
             return redirect()->intended('dashboard')
                 ->withSuccess('Signed in');
         }
@@ -63,7 +69,6 @@ class CustomAuthController extends Controller
         ]);
     }
 
-
     public function dashboard()
     {
         if (Auth::check()) {
@@ -72,7 +77,6 @@ class CustomAuthController extends Controller
 
         return redirect("login")->withSuccess('You are not allowed to access');
     }
-
 
     public function signOut()
     {
