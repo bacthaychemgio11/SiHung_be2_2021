@@ -32,7 +32,7 @@ class CustomAuthController extends Controller
 
         if (Auth::attempt($input)) {
 
-            return redirect()->intended('dashboard')
+            return redirect()->intended('dashboard')->with('user', Auth::user())
                 ->withSuccess('Signed in');
         }
 
