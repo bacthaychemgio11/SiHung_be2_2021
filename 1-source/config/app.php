@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // MY PACK
+        Foostart\Acl\Authentication\AuthenticationServiceProvider::class,
+        Foostart\Category\CategoryServiceProvider::class,
     ],
 
     /*

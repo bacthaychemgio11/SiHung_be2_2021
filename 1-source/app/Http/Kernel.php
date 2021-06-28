@@ -65,6 +65,14 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'per_page' => \App\Http\Middleware\PerPage::class,
-        'trainer_logic' => \App\Http\Middleware\trainer_logic::class
+        'trainer_logic' => \App\Http\Middleware\trainer_logic::class,
+
+
+        // MY PACK
+        'admin_logged' => \Foostart\Acl\Http\Middleware\AdminLogged::class,
+        'logged' => \Foostart\Acl\Http\Middleware\Logged::class,
+        'can_see' => \Foostart\Acl\Http\Middleware\CanSee::class,
+        'has_perm' => \Foostart\Acl\Http\Middleware\HasPerm::class,
+        'in_context' => \Foostart\Category\Middleware\InContext::class,
     ];
 }
